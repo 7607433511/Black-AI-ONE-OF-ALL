@@ -1,0 +1,848 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BLACK AI | Official Website</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --background: #050505;
+    --card: #101010;
+    --border: #292929;
+    --text: #ffffff;
+    --muted: #a1a1aa;
+}
+
+body {
+    background: var(--background);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+button, input, textarea {
+    font-family: inherit;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 20px 7%;
+    background: rgba(5,5,5,0.96);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: #888;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status {
+    font-size: 11px;
+    color: #aaa;
+    border: 1px solid #333;
+    padding: 9px 13px;
+    border-radius: 25px;
+}
+
+.admin-open {
+    border: 1px solid #444;
+    color: white;
+    background: #151515;
+    padding: 10px 15px;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+main {
+    max-width: 1050px;
+    width: 90%;
+    margin: 45px auto;
+}
+
+.hero {
+    text-align: center;
+    padding: 35px 10px;
+}
+
+.profile-box {
+    position: relative;
+    width: 145px;
+    height: 145px;
+    margin: 0 auto 25px;
+}
+
+.profile {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid #666;
+    padding: 4px;
+    background: #161616;
+    object-fit: cover;
+}
+
+h1 {
+    font-size: clamp(40px, 8vw, 72px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    overflow-wrap: anywhere;
+    margin-bottom: 15px;
+}
+
+h1 span {
+    color: #777;
+}
+
+.tag {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #888;
+    margin-bottom: 13px;
+}
+
+.bio {
+    color: #aaa;
+    line-height: 1.8;
+    max-width: 620px;
+    margin: 0 auto;
+    overflow-wrap: anywhere;
+}
+
+.section-title {
+    font-size: 25px;
+    margin: 40px 0 22px;
+}
+
+.section-title span {
+    color: #777;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.tool-card {
+    background: linear-gradient(145deg, #151515, #090909);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    transition: .25s;
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    border-color: #666;
+}
+
+.tool-icon {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #333;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    background: #1c1c1c;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.tool-card h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.tool-card p {
+    font-size: 14px;
+    color: #999;
+    line-height: 1.8;
+    margin-bottom: 23px;
+}
+
+.tool-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: .2s;
+}
+
+.tool-btn:hover {
+    background: #ccc;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 30px;
+}
+
+.info-card {
+    background: #101010;
+    border: 1px solid #292929;
+    border-radius: 13px;
+    padding: 23px 10px;
+    text-align: center;
+}
+
+.info-card strong {
+    display: block;
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.info-card span {
+    font-size: 11px;
+    color: #888;
+}
+
+/* ADMIN MODAL */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    overflow-y: auto;
+    background: rgba(0,0,0,.88);
+    padding: 25px 15px;
+}
+
+.modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 35px auto;
+    padding: 28px;
+    border: 1px solid #333;
+    border-radius: 18px;
+    background: #101010;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 17px;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.modal h2 {
+    margin-bottom: 10px;
+    padding-right: 25px;
+}
+
+.modal-desc {
+    color: #999;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.field {
+    margin-bottom: 18px;
+}
+
+.field label {
+    display: block;
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 9px;
+}
+
+.field input,
+.field textarea {
+    width: 100%;
+    background: #070707;
+    border: 1px solid #333;
+    color: white;
+    padding: 13px;
+    border-radius: 9px;
+    outline: none;
+    font-size: 14px;
+}
+
+.field input:focus,
+.field textarea:focus {
+    border-color: #888;
+}
+
+.field textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.action-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+.action-btn:hover {
+    background: #ccc;
+}
+
+.secondary-btn {
+    background: #202020;
+    color: white;
+    border: 1px solid #444;
+}
+
+.secondary-btn:hover {
+    background: #303030;
+}
+
+.message {
+    font-size: 13px;
+    line-height: 1.7;
+    margin-top: 15px;
+    color: #ddd;
+    overflow-wrap: anywhere;
+}
+
+.admin-panel {
+    display: none;
+}
+
+.admin-label {
+    display: inline-block;
+    font-size: 10px;
+    color: #ddd;
+    border: 1px solid #444;
+    border-radius: 20px;
+    padding: 6px 10px;
+    margin-bottom: 18px;
+}
+
+footer {
+    margin-top: 60px;
+    padding: 30px 15px;
+    border-top: 1px solid #222;
+    color: #777;
+    font-size: 12px;
+    line-height: 2;
+    text-align: center;
+}
+
+footer strong {
+    color: white;
+}
+
+@media(max-width:650px) {
+    header {
+        padding: 16px 5%;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .status {
+        display: none;
+    }
+
+    main {
+        width: 92%;
+        margin-top: 25px;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-card {
+        padding: 23px;
+    }
+
+    .info-grid {
+        gap: 7px;
+    }
+
+    .info-card {
+        padding: 18px 5px;
+    }
+
+    .modal-content {
+        padding: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">BLACK <span>AI.</span></div>
+
+    <div class="header-right">
+        <div class="status">● OFFICIAL WEBSITE</div>
+        <button class="admin-open" id="openAdmin">ADMIN</button>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+
+        <div class="profile-box">
+            <img
+                id="profileImage"
+                class="profile"
+                alt="Profile photo"
+                src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' rx='75' fill='%23151515'/%3E%3Ccircle cx='75' cy='53' r='27' fill='%23555555'/%3E%3Cpath d='M20 150 Q25 85 75 85 Q125 85 130 150' fill='%23555555'/%3E%3C/svg%3E"
+            >
+        </div>
+
+        <div class="tag">WELCOME TO MY DIGITAL WORLD</div>
+
+        <h1 id="displayName">BLACK <span>AI</span></h1>
+
+        <p class="bio" id="displayBio">
+            Welcome to BLACK AI. Explore my tools, educational notes,
+            digital projects and creative work in one place.
+        </p>
+
+    </section>
+
+    <h2 class="section-title">MY <span>PLATFORMS</span></h2>
+
+    <section class="tools-grid">
+
+        <article class="tool-card">
+            <div class="tool-icon">⚡</div>
+            <h3>My Tool</h3>
+            <p>
+                Explore my online tools, resources and digital projects.
+                Open my tools website directly.
+            </p>
+
+            <a
+                class="tool-btn"
+                href="https://7607433511.github.io/Black-study-/"
+            >MY TOOL ↗</a>
+        </article>
+
+        <article class="tool-card">
+            <div class="tool-icon">📚</div>
+            <h3>Note</h3>
+            <p>
+                Read my notes, chapters and educational material
+                on my notes website.
+            </p>
+
+            <a
+                class="tool-btn"
+                href="https://7607433511.github.io/Note/"
+            >NOTE ↗</a>
+        </article>
+
+    </section>
+
+    <section class="info-grid">
+        <div class="info-card">
+            <strong>AI</strong>
+            <span>TECHNOLOGY</span>
+        </div>
+
+        <div class="info-card">
+            <strong>TOOLS</strong>
+            <span>DIGITAL RESOURCES</span>
+        </div>
+
+        <div class="info-card">
+            <strong>NOTES</strong>
+            <span>LEARNING</span>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <strong>BLACK AI.</strong><br>
+    Tools · Notes · Technology · Creativity<br>
+    © <span id="year"></span> BLACK AI. All rights reserved.
+</footer>
+
+
+<!-- ADMIN LOGIN MODAL -->
+
+<div class="modal" id="adminModal">
+
+    <div class="modal-content">
+
+        <button class="close" id="closeAdmin" aria-label="Close">
+            &times;
+        </button>
+
+        <section id="loginPanel">
+
+            <h2>Admin Login</h2>
+
+            <p class="modal-desc">
+                Log in to manage your profile photo, name and information.
+            </p>
+
+            <form id="loginForm">
+
+                <div class="field">
+                    <label for="adminPassword">ADMIN PASSWORD</label>
+                    <input
+                        type="password"
+                        id="adminPassword"
+                        placeholder="Enter admin password"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button class="action-btn" type="submit">
+                    LOGIN TO ADMIN
+                </button>
+
+            </form>
+
+            <p class="message" id="loginMessage" role="status"></p>
+
+        </section>
+
+
+        <!-- ADMIN DASHBOARD -->
+
+        <section class="admin-panel" id="dashboard">
+
+            <span class="admin-label">● ADMIN MODE</span>
+
+            <h2>Manage Profile</h2>
+
+            <p class="modal-desc">
+                Upload your profile photo and edit the information
+                displayed on the BLACK AI homepage.
+            </p>
+
+            <div class="field">
+                <label for="photoUpload">UPLOAD PROFILE PHOTO</label>
+                <input
+                    type="file"
+                    id="photoUpload"
+                    accept="image/*"
+                >
+            </div>
+
+            <div class="field">
+                <label for="editName">YOUR NAME / WEBSITE TITLE</label>
+                <input
+                    type="text"
+                    id="editName"
+                    maxlength="70"
+                    placeholder="Enter your name"
+                >
+            </div>
+
+            <div class="field">
+                <label for="editBio">YOUR INFORMATION</label>
+                <textarea
+                    id="editBio"
+                    maxlength="1000"
+                    placeholder="Write your introduction and skills"
+                ></textarea>
+            </div>
+
+            <button class="action-btn" id="saveChanges">
+                SAVE PROFILE
+            </button>
+
+            <button class="action-btn secondary-btn" id="removePhoto">
+                REMOVE PROFILE PHOTO
+            </button>
+
+            <button class="action-btn secondary-btn" id="logout">
+                LOG OUT
+            </button>
+
+            <p class="message" id="adminMessage" role="status"></p>
+
+        </section>
+
+    </div>
+</div>
+
+
+<script>
+"use strict";
+
+const ADMIN_PASSWORD = "700185344";
+
+const DEFAULT_BIO =
+    "Welcome to BLACK AI. Explore my tools, educational notes, digital projects and creative work in one place.";
+
+const DEFAULT_PHOTO =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'%3E%3Crect width='150' height='150' rx='75' fill='%23151515'/%3E%3Ccircle cx='75' cy='53' r='27' fill='%23555555'/%3E%3Cpath d='M20 150 Q25 85 75 85 Q125 85 130 150' fill='%23555555'/%3E%3C/svg%3E";
+
+const modal = document.getElementById("adminModal");
+const loginPanel = document.getElementById("loginPanel");
+const dashboard = document.getElementById("dashboard");
+
+const displayName = document.getElementById("displayName");
+const displayBio = document.getElementById("displayBio");
+const profileImage = document.getElementById("profileImage");
+
+const adminPassword = document.getElementById("adminPassword");
+const editName = document.getElementById("editName");
+const editBio = document.getElementById("editBio");
+const photoUpload = document.getElementById("photoUpload");
+
+let isAdmin = false;
+let pendingPhoto = null;
+
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+function getSaved(key, fallback) {
+    try {
+        const value = localStorage.getItem(key);
+        return value === null ? fallback : value;
+    } catch (error) {
+        return fallback;
+    }
+}
+
+function setSaved(key, value) {
+    try {
+        localStorage.setItem(key, value);
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
+function removeSaved(key) {
+    try {
+        localStorage.removeItem(key);
+    } catch (error) {
+        console.warn("Unable to remove saved item.");
+    }
+}
+
+function renderProfile() {
+    const name = getSaved("blackAI_name", "BLACK AI");
+    const bio = getSaved("blackAI_bio", DEFAULT_BIO);
+    const photo = getSaved("blackAI_photo", DEFAULT_PHOTO);
+
+    if (name === "BLACK AI") {
+        displayName.innerHTML = "BLACK <span>AI</span>";
+    } else {
+        displayName.textContent = name;
+    }
+
+    displayBio.textContent = bio;
+    profileImage.src = photo;
+}
+
+function openModal() {
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
+
+    if (isAdmin) {
+        showDashboard();
+    } else {
+        loginPanel.style.display = "block";
+        dashboard.style.display = "none";
+        adminPassword.value = "";
+        document.getElementById("loginMessage").textContent = "";
+    }
+}
+
+function closeModal() {
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+}
+
+function showDashboard() {
+    loginPanel.style.display = "none";
+    dashboard.style.display = "block";
+
+    editName.value = getSaved("blackAI_name", "BLACK AI");
+    editBio.value = getSaved("blackAI_bio", DEFAULT_BIO);
+
+    document.getElementById("adminMessage").textContent = "";
+}
+
+document.getElementById("openAdmin").addEventListener("click", openModal);
+
+document.getElementById("closeAdmin").addEventListener("click", closeModal);
+
+modal.addEventListener("click", function(event) {
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        closeModal();
+    }
+});
+
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (adminPassword.value === ADMIN_PASSWORD) {
+        isAdmin = true;
+        showDashboard();
+    } else {
+        document.getElementById("loginMessage").textContent =
+            "Incorrect password. Please try again.";
+    }
+});
+
+// Select a profile photo. Only logged-in admin can do this.
+photoUpload.addEventListener("change", function() {
+    if (!isAdmin) {
+        photoUpload.value = "";
+        return;
+    }
+
+    const file = photoUpload.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        alert("Please select a valid image.");
+        photoUpload.value = "";
+        return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+        alert("Please select an image smaller than 2 MB.");
+        photoUpload.value = "";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+        if (!isAdmin) return;
+
+        pendingPhoto = event.target.result;
+        document.getElementById("adminMessage").textContent =
+            "Photo selected. Click SAVE PROFILE to save your changes.";
+    };
+
+    reader.onerror = function() {
+        document.getElementById("adminMessage").textContent =
+            "Unable to read this image. Please try another one.";
+    };
+
+    reader.readAsDataURL(file);
+});
+
+document.getElementById("saveChanges").addEventListener("click", function() {
+    if (!isAdmin) return;
+
+    const name = editName.value.trim() || "BLACK AI";
+    const bio = editBio.value.trim() || DEFAULT_BIO;
+
+    // Prepare changes first so existing data is not partially overwritten.
+    const changes = [
+        ["blackAI_name", name],
+        ["blackAI_bio", bio]
+    ];
+
+    if (pendingPhoto !== null) {
+        changes.push(["blackAI_photo", pendingPhoto]);
+    }
+
+    try {
+        for (const [key, value] of changes) {
+            localStorage.setItem(key, value);
+        }
+
+        pendingPhoto = null;
+        photoUpload.value = "";
+
+        renderProfile();
+
+        document.getElementById("adminMessage").textContent =
+            "Profile saved successfully in this browser.";
+    } catch (error) {
+        document.getElementById("adminMessage").textContent =
+            "Could not save changes. Try a smaller photo or free browser storage.";
+    }
+});
+
+document.getElementById("removePhoto").addEventListener("click", function() {
+    if (!isAdmin) return;
+
+    removeSaved("blackAI_photo");
+    pendingPhoto = null;
+    photoUpload.value = "";
+
+    renderProfile();
+
+    document.getElementById("adminMessage").textContent =
+        "Profile photo removed.";
+});
+
+document.getElementById("logout").addEventListener("click", function() {
+    isAdmin = false;
+    pendingPhoto = null;
+    photoUpload.value = "";
+    adminPassword.value = "";
+
+    loginPanel.style.display = "block";
+    dashboard.style.display = "none";
+
+    closeModal();
+});
+
+renderProfile();
+</script>
+
+</body>
+</html>
+```
